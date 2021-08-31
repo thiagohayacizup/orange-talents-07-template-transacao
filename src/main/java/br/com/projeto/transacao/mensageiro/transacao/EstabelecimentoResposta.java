@@ -1,6 +1,6 @@
-package br.com.projeto.transacao.transacao.kafka.transacao;
+package br.com.projeto.transacao.mensageiro.transacao;
 
-public class Estabelecimento {
+public class EstabelecimentoResposta {
 
     private String nome;
 
@@ -20,13 +20,15 @@ public class Estabelecimento {
         this.endereco = endereco;
     }
 
-    @Override
-    public String toString() {
-        return "Estabelecimento{" +
-                "nome='" + nome + '\'' +
-                ", cidade='" + cidade + '\'' +
-                ", endereco='" + endereco + '\'' +
-                '}';
+    public String getNome() {
+        return nome;
     }
 
+    public String getCidade() {
+        return cidade;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
 }

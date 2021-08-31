@@ -1,0 +1,32 @@
+[
+  {
+    "id": 2,
+    "idTransacao": "2",
+    "valor": 50.0,
+    "estabelecimento": {
+      "nome": "cara palida",
+      "cidade": "cidade",
+      "endereco": "endereco"
+    },
+    "cartao": {
+      "id": "abcde1234567-01",
+      "email": "email@dominio.com"
+    },
+    "efetivadaEm": "2021-02-03"
+  },
+  {
+    "id": 1,
+    "idTransacao": "1",
+    "valor": 50.0,
+    "estabelecimento": {
+      "nome": "cara palida",
+      "cidade": "cidade",
+      "endereco": "endereco"
+    },
+    "cartao": {
+      "id": "abcde1234567-01",
+      "email": "email@dominio.com"
+    },
+    "efetivadaEm": "2021-02-03"
+  }
+]

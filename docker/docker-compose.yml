@@ -1,5 +1,22 @@
 version: '3.8'
 services:
+# BANCO DADOS PROPOSTA--------------------------------------------------------
+  database-transacao:
+    image: mariadb:latest
+    profiles:
+      - producao
+      - desenvolvimento
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=transacao
+      - MYSQL_PASSWORD=transacao
+      - MYSQL_DATABASE=transacao
+    ports:
+      - 3306:3306
+    volumes:
+      - database-transacao-volume:/var/lib/mariadb
+    networks:
+      - transacao-network
 # TRANSAÇÕES
   transacoes:
     image: zupacademy/transacoes
@@ -48,6 +65,10 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
     networks:
       - transacao-network
+
+volumes:
+  database-transacao-volume:
+    name: database-transacao-volume
 
 networks:
   transacao-network:
