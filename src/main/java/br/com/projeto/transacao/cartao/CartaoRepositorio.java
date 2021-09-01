@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface CartaoRepositorio extends JpaRepository<Cartao, Long> {
 
     Optional<Cartao> findByIdCartao( final String idCartao );
+
 }

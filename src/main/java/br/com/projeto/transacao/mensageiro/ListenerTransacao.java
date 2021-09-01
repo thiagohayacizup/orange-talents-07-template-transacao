@@ -8,6 +8,8 @@ import br.com.projeto.transacao.cartao.Cartao;
 import br.com.projeto.transacao.transacao.Estabelecimento;
 import br.com.projeto.transacao.transacao.Transacao;
 import br.com.projeto.transacao.transacao.TransacaoRepositorio;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +24,8 @@ public class ListenerTransacao {
         this.transacaoRepositorio = transacaoRepositorio;
         this.cartaoRepositorio = cartaoRepositorio;
     }
+
+    private final Logger logger = LoggerFactory.getLogger(ListenerTransacao.class);
 
     @KafkaListener(topics = "${spring.kafka.topic.transactions}")
     public void ouvir(final TransacaoResposta transacaoResposta) {
@@ -39,7 +43,7 @@ public class ListenerTransacao {
                         )
                 )
                 .comCartao(
-                        Cartao.create(
+                        Cartao.of(
                                 cartao.getId(),
                                 cartao.getEmail(),
                                 cartaoRepositorio
@@ -48,6 +52,10 @@ public class ListenerTransacao {
                 .comEfetivadaEm( transacaoResposta.getEfetivadaEm() )
                 .construir()
                 .salvar( transacaoRepositorio );
+        logger.info(
+                "Transação Recebida e Processada *****-***{}",
+                transacaoResposta.getId().substring(transacaoResposta.getId().length() -4)
+        );
     }
 
 }

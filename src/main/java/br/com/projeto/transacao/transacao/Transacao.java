@@ -43,8 +43,8 @@ public class Transacao {
     @OneToOne( cascade = CascadeType.PERSIST )
     private @NotNull Estabelecimento estabelecimento;
 
-    @ManyToOne
-    private @NotNull Cartao cartao;
+    @ManyToOne( cascade = CascadeType.PERSIST )
+    private Cartao cartao;
 
     @NotBlank
     private @NotNull String efetivadaEm;
@@ -59,11 +59,15 @@ public class Transacao {
         this.efetivadaEm = builder.efetivadaEm;
     }
 
+    public Transacao salvar( final TransacaoRepositorio transacaoRepositorio ){
+        return transacaoRepositorio.save(this);
+    }
     public static class Builder{
         private String idTransacao;
         private BigDecimal valor;
         private Estabelecimento estabelecimento;
         private Cartao cartao;
+
         private String efetivadaEm;
 
         public Builder comIdTransacao(final String idTransacao) {
@@ -95,10 +99,6 @@ public class Transacao {
             return new Transacao( this );
         }
 
-    }
-
-    public Transacao salvar( final TransacaoRepositorio transacaoRepositorio ){
-        return transacaoRepositorio.save(this);
     }
 
     public Long getId() {

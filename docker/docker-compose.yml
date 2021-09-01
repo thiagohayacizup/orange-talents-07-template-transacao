@@ -65,6 +65,34 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
     networks:
       - transacao-network
+# KEYCLOAK
+  keycloak:
+    image: jboss/keycloak:11.0.0
+    profiles:
+      - producao
+      - desenvolvimento
+    ports:
+      - 8443:8443
+      - 8083:8080
+      - 9990:9990
+    depends_on:
+      - banco-dados-proposta
+      - analise-financeira
+      - contas
+    environment:
+      DB_VENDOR: mariadb
+      DB_ADDR: database-transacao
+      DB_PORT: 3306
+      DB_DATABASE: transacao
+      DB_USER: transacao
+      DB_PASSWORD: transacao
+      KEYCLOAK_USER: keycloak
+      KEYCLOAK_PASSWORD: Pa55w0rd
+      KEYCLOAK_ISSUER_URI: http://keycloak:8083/auth/realms/proposta
+      KEYCLOAK_JWKS_URI: http://keycloak:8083/auth/realms/proposta/protocol/openid-connect/certs
+    restart: on-failure
+    networks:
+      - transacao-network
 
 volumes:
   database-transacao-volume:

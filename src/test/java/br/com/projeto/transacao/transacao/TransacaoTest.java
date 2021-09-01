@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
+
 import java.util.Optional;
 
 class TransacaoTest {
@@ -24,7 +25,7 @@ class TransacaoTest {
                         Estabelecimento.of("ola", "como", "vai")
                 )
                 .comCartao(
-                        Cartao.create("abcdefgh", "email@dominio.com", cartaoRepositorioMock)
+                        Cartao.of("abcdefgh", "email@dominio.com",cartaoRepositorioMock)
                 )
                 .comEfetivadaEm("2021-01-03")
                 .construir();
@@ -48,23 +49,23 @@ class TransacaoTest {
     }
 
     @Test
-    @DisplayName("Criacao da transacao com cartao existente")
-    void transacaoCriadaCartaoExistente(){
+    @DisplayName("Criacao da transacao com cartao")
+    void transacaoCriadaComCartao(){
         final TransacaoRepositorio mock = Mockito.mock(TransacaoRepositorio.class);
         final CartaoRepositorio cartaoRepositorioMock = Mockito.mock(CartaoRepositorio.class);
-        final Cartao cartao = Cartao.create("abcdefgh", "email@dominio.com", cartaoRepositorioMock);
+        final Cartao cartao = Cartao.of("abcdefgh", "email@dominio.com", cartaoRepositorioMock);
         final Transacao transacao = Transacao.construtor()
                 .comIdTransacao("1234567")
                 .comValor( BigDecimal.TEN )
                 .comEstabelecimento(
                         Estabelecimento.of("ola", "como", "vai")
                 )
-                .comCartao( cartao )
+                .comCartao(cartao)
                 .comEfetivadaEm("2021-01-03")
                 .construir();
 
         Mockito.when( mock.save( Mockito.any() ) ).thenReturn( transacao );
-        Mockito.when( cartaoRepositorioMock.findByIdCartao( Mockito.anyString() ) ).thenReturn( Optional.of( cartao ) );
+        Mockito.when( cartaoRepositorioMock.findByIdCartao( Mockito.anyString() ) ).thenReturn( Optional.of(cartao) );
 
         final Transacao salvar = transacao.salvar(mock);
         final Estabelecimento estabelecimento = salvar.getEstabelecimento();

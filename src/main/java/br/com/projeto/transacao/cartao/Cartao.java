@@ -10,10 +10,10 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Cartao {
 
-    public static Cartao create( final String idCartao, final String email, final CartaoRepositorio cartaoRepositorio ){
+    public static Cartao of( final String idCartao, final String email, final CartaoRepositorio cartaoRepositorio ){
         return cartaoRepositorio
                 .findByIdCartao( idCartao )
-                .orElse( new Cartao( idCartao, email ) );
+                .orElse(new Cartao( idCartao, email ));
     }
 
     @Id
