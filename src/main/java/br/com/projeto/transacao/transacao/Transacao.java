@@ -43,7 +43,7 @@ public class Transacao {
     @OneToOne( cascade = CascadeType.PERSIST )
     private @NotNull Estabelecimento estabelecimento;
 
-    @ManyToOne( cascade = CascadeType.PERSIST )
+    @ManyToOne( cascade = CascadeType.MERGE )
     private Cartao cartao;
 
     @NotBlank
@@ -62,6 +62,7 @@ public class Transacao {
     public Transacao salvar( final TransacaoRepositorio transacaoRepositorio ){
         return transacaoRepositorio.save(this);
     }
+
     public static class Builder{
         private String idTransacao;
         private BigDecimal valor;
@@ -124,4 +125,5 @@ public class Transacao {
     public String getEfetivadaEm() {
         return efetivadaEm;
     }
+
 }

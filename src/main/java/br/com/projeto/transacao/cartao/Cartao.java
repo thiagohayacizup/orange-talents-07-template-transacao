@@ -13,7 +13,7 @@ public class Cartao {
     public static Cartao of( final String idCartao, final String email, final CartaoRepositorio cartaoRepositorio ){
         return cartaoRepositorio
                 .findByIdCartao( idCartao )
-                .orElse(new Cartao( idCartao, email ));
+                .orElseGet( () -> new Cartao( idCartao, email ).salvar(cartaoRepositorio));
     }
 
     @Id
@@ -39,6 +39,10 @@ public class Cartao {
 
     public String getEmail() {
         return email;
+    }
+
+    private Cartao salvar( final CartaoRepositorio cartaoRepositorio ){
+        return cartaoRepositorio.save(this);
     }
 
 }
